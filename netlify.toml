@@ -1,0 +1,21 @@
+# Cf. https://docs.netlify.com/configure-builds/file-based-configuration
+
+[build]
+publish = "build/webpack/frontend/"
+
+[build.processing]
+skip_processing = true
+
+[functions]
+# Don't let netlify handle .js file because of https://github.com/netlify/zip-it-and-ship-it/issues/309
+directory = "build/webpack/backend-netlify-zip/"
+
+# Cf.
+# - https://docs.netlify.com/routing/redirects/rewrites-proxies
+# - https://docs.netlify.com/configure-builds/file-based-configuration/#redirects
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/api/:splat"
+status = 200
+force = true
